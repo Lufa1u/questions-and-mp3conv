@@ -5,3 +5,4 @@
 /.idea/questions-and-mp3conv.iml
 /.idea/vcs.xml
 /.idea/dataSources.xml
+.env
