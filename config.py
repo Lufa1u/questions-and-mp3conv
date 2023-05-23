@@ -2,9 +2,11 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
 import os
-from sqlalchemy.orm import declarative_base
+
 
 load_dotenv()
+
+path_to_folder = os.environ.get("PATH_TO_FOLDER")
 
 
 class DBConfig:
