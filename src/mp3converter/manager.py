@@ -6,7 +6,7 @@ from fastapi import UploadFile, HTTPException
 from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 
-from config import path_to_folder, DBConfig
+from config import DBConfig
 from src.mp3converter.model import UserModel, AudioModel
 from src.mp3converter.schemas import UserSchema
 
