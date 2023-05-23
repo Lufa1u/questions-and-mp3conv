@@ -16,3 +16,8 @@ async def create_user(username: str, db: Session = Depends(get_db)):
 @router.post(path="/convert", response_model=str)
 async def convert(user: str, user_uuid: str, file: UploadFile, db: Session = Depends(get_db)):
     return await manager.convert(user=user, user_uuid=user_uuid, file=file, db=db)
+
+
+@router.get(path="/")
+async def download(id: int, user: int):
+    return await manager.download(id=id, user=user)

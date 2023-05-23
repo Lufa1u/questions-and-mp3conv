@@ -1,7 +1,9 @@
+import os
 from os import path
 from uuid import uuid4
 
 from fastapi import UploadFile, HTTPException
+from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 
 from config import path_to_folder, DBConfig
@@ -26,10 +28,20 @@ async def convert(user: str, user_uuid: str, file: UploadFile, db: Session):
         raise HTTPException(status_code=403, detail="Incorrect user id or token.")
 
     audio_uuid = str(uuid4())
-    with open(f"{path_to_folder}/{audio_uuid}.mp3", "ab") as f:
-        f.write(file.file.read())
-
     audio_model = AudioModel(uuid=audio_uuid, user_id=user)
     db.add(audio_model)
     db.commit()
-    return f"http://{DBConfig.DB_HOST}:{DBConfig.DB_PORT}/record?id={audio_model.id}&user={user}"
+
+    if not os.path.exists("mp3files"):
+        os.mkdir(path="mp3files")
+
+    with open(f"mp3files/id_{audio_model.id}_user_{user}.mp3", "ab") as f:
+        f.write(file.file.read())
+
+    return f"http://{DBConfig.DB_HOST}:8000/record?id={audio_model.id}&user={user}"
+
+
+async def download(id: int, user: int):
+    return FileResponse(path=f"mp3files/id_{id}_user_{user}.mp3",
+                        filename=f"id_{id}_user_{user}.mp3",
+                        media_type='application/octet-stream')
