@@ -5,6 +5,6 @@ from src.mp3converter import routes as converter_routes
 
 app = FastAPI()
 
-# app.include_router(router=questions_routes.router, prefix="/questions", tags=["QUESTIONS"])
+app.include_router(router=questions_routes.router, prefix="/quiz", tags=["QUIZ"])
 app.include_router(router=converter_routes.router, prefix="/record", tags=["RECORD"])
 
