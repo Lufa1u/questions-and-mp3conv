@@ -38,7 +38,7 @@ async def convert(user: str, user_uuid: str, file: UploadFile, db: Session):
     with open(f"mp3files/id_{audio_model.id}_user_{user}.mp3", "ab") as f:
         f.write(file.file.read())
 
-    return f"http://{DBConfig.DB_HOST}:8000/record?id={audio_model.id}&user={user}"
+    return f"http://localhost:8000/record?id={audio_model.id}&user={user}"
 
 
 async def download(id: int, user: int):
